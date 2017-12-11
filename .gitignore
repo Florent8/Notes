@@ -5,6 +5,8 @@
 .DS_Store
 ._.DS_Store
 Notes.xcodeproj
+.*.swift
+.*.plist
 
 ## Build generated
 build/
