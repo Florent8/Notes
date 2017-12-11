@@ -17,6 +17,7 @@ class NoteAddOrEditTableViewController: UITableViewController, MKMapViewDelegate
     @IBOutlet private weak var saveButton: UIBarButtonItem!
     @IBOutlet private weak var mapView: MKMapView!
     private let locationManager = CLLocationManager()
+    private var location = CLLocationCoordinate2D()
     
     func setNote(note: Note) {
         self.note = note
@@ -69,6 +70,7 @@ class NoteAddOrEditTableViewController: UITableViewController, MKMapViewDelegate
     }
     
     private func centerMapInLocation(_ location: CLLocationCoordinate2D) {
+        self.location = location
         let annotation = MKPointAnnotation()
         annotation.coordinate = location
         mapView.addAnnotation(annotation)
@@ -91,7 +93,6 @@ class NoteAddOrEditTableViewController: UITableViewController, MKMapViewDelegate
     }
     
     @IBAction func updateLocation(_ sender: UIButton) {
-        print(CLLocationManager.authorizationStatus())
         if CLLocationManager.authorizationStatus() != CLAuthorizationStatus.notDetermined {
             locationManager.startUpdatingLocation()
         } else {
@@ -157,7 +158,7 @@ class NoteAddOrEditTableViewController: UITableViewController, MKMapViewDelegate
                 createdAt = note.getCreatedAt()
                 updatedAt = Date()
             }
-            note = Note(title: titleTextField.text!, content: noteTextField.text!, createdAt: createdAt, updatedAt: updatedAt, location: CLLocationCoordinate2D())
+            note = Note(title: titleTextField.text!, content: noteTextField.text!, createdAt: createdAt, updatedAt: updatedAt, location: location)
         }
     }
 }
