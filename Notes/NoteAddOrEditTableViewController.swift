@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 class NoteAddOrEditTableViewController: UITableViewController, MKMapViewDelegate, CLLocationManagerDelegate {
-
+    
     private var note: Note?
     @IBOutlet private weak var titleTextField: UITextField!
     @IBOutlet private weak var noteTextField: UITextField!
@@ -29,12 +29,10 @@ class NoteAddOrEditTableViewController: UITableViewController, MKMapViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        mapView.showsUserLocation = true
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        locationManager.allowDeferredLocationUpdates(untilTraveled: 1000, timeout: 1000)
-        mapView.showsUserLocation = true
         
         if let note = note {
             titleTextField.text = note.getTitle()
@@ -44,7 +42,6 @@ class NoteAddOrEditTableViewController: UITableViewController, MKMapViewDelegate
         } else {
             centerMapInLocation(CLLocationCoordinate2D())
         }
-        
     
         noteTextField.borderStyle = UITextBorderStyle.roundedRect
     }
@@ -65,12 +62,7 @@ class NoteAddOrEditTableViewController: UITableViewController, MKMapViewDelegate
         // #warning Incomplete implementation, return the number of rows
         return 1
     }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let currentLocation = locations.last {
-            centerMapInLocation(currentLocation.coordinate)
-        }
-    }
+
     
     private func setSaveButtonEnabled() {
         saveButton.isEnabled = titleTextField.text != "" && noteTextField.text != ""
@@ -82,13 +74,29 @@ class NoteAddOrEditTableViewController: UITableViewController, MKMapViewDelegate
         mapView.addAnnotation(annotation)
         mapView.setRegion(MKCoordinateRegion(center: location, span: MKCoordinateSpanMake(0.5, 0.5)), animated: true)
     }
-
-    @IBAction func titleTextChanged(_ sender: UITextField) {
+    
+    @IBAction func titleDidChanged(_ sender: UITextField) {
         setSaveButtonEnabled()
     }
     
-    @IBAction func noteTextChanded(_ sender: UITextField) {
+    @IBAction func noteDidChanged(_ sender: UITextField) {
         setSaveButtonEnabled()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let lastLocation = locations.last?.coordinate {
+            centerMapInLocation(lastLocation)
+        }
+        locationManager.stopUpdatingLocation()
+    }
+    
+    @IBAction func updateLocation(_ sender: UIButton) {
+        print(CLLocationManager.authorizationStatus())
+        if CLLocationManager.authorizationStatus() != CLAuthorizationStatus.notDetermined {
+            locationManager.startUpdatingLocation()
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+        }
     }
     
     /*

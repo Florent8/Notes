@@ -99,7 +99,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="titleTextChanged:" destination="GoM-iG-QXs" eventType="editingDidEnd" id="xov-1i-rce"/>
+                                                        <action selector="titleDidChanged:" destination="GoM-iG-QXs" eventType="editingChanged" id="qxP-aA-3Hf"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -117,14 +117,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Note" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fzv-VQ-Pq8">
-                                                    <rect key="frame" x="8" y="6" width="359" height="174"/>
+                                                    <rect key="frame" x="8" y="3" width="359" height="173"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="noteTextChanded:" destination="GoM-iG-QXs" eventType="editingDidEnd" id="YUN-g4-nvI"/>
+                                                        <action selector="noteDidChanged:" destination="GoM-iG-QXs" eventType="editingChanged" id="KVk-MO-dlc"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -145,6 +145,15 @@
                                                     <rect key="frame" x="8" y="8" width="359" height="277"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </mapView>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m9F-hw-uXU">
+                                                    <rect key="frame" x="327" y="15" width="34" height="35"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" image="arrow-destination"/>
+                                                    <connections>
+                                                        <action selector="titleDidChanged:" destination="GoM-iG-QXs" eventType="editingChanged" id="5r4-dg-IeH"/>
+                                                        <action selector="updateLocation:" destination="GoM-iG-QXs" eventType="touchUpInside" id="b4r-kd-PhB"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -213,6 +222,9 @@
             <point key="canvasLocation" x="-482" y="-57"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="arrow-destination" width="256" height="256"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="mKR-db-ZEd"/>
     </inferredMetricsTieBreakers>
